@@ -10,7 +10,7 @@ var http = require('http');
 var numCPUs = require('os').cpus().length;
 var webserver = require('./webserver/index.js');
 var logger = require('./logger/index.js');
-var config = require('./config/config.json');
+var config = require('./config/index.js');
 
 if (cluster.isMaster) {
     for (var i = 0; i < numCPUs; i++) {
@@ -18,7 +18,7 @@ if (cluster.isMaster) {
     }
     cluster.on('exit', function (worker, code, signal) {
         logger.warn('node process pid:' + worker.process.pid + ' exits');
-        cluster.fork();
+        cluster.fork();//有子进程退出，则重新启动一个
         logger.info('restart node child process');
     });
     cluster.on('listening', function (worker) {
@@ -27,5 +27,5 @@ if (cluster.isMaster) {
 } else {
     http.createServer(function (req, res) {
         webserver.router(req, res);
-    }).listen(config.webserver.port);
+    }).listen(config.config.webserver.port);
 }

@@ -2,7 +2,7 @@
  * @file 控制整个web服务的路由
  * @author zengcheng
  */
-var config = require('../config/config.json');
+var config = require('../config/index.js');
 
 /**
  * 获取当前的host,pathname
@@ -24,10 +24,10 @@ function getReqInfo = function (req) {
 /**
  * 获取对应的controller
  * @param  {string} pathname  请求路径
- * @param  {string} projectRoot 项目的根目录
+ * @param  {object} projectInfo 项目的基本信息
  * @return {boolean|string} controller存在则返回对象，否则返回false
  */
-function getController = function (pathname, projectRoot) {
+function getController = function (pathname, projectInfo) {
 
 };
 
@@ -36,14 +36,13 @@ function getController = function (pathname, projectRoot) {
  * 根据域名分发到对应的项目的controller处理
  */
 exports.dispatch = function (req, res) {
-    var etc = config.etc;
+    var etc = config.config.etc;
 
     //获取当前的请求信息
     var reqInfo = getReqInfo(req);
 
-    //找到对应的controller
-    //找到对应的项目
-    var project = etc.domains[reqInfo.host];
-    //找到项目的根目录
-    var projectRootPath = etc.projects[project];
+    //获取当前的项目信息
+    var projectInfo = config.getProjectInfo(reqInfo.host);
+
+    //获取对应的controller
 };
