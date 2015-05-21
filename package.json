@@ -1,0 +1,27 @@
+{
+  "name": "speed",
+  "version": "1.0.0",
+  "description": "fast dev",
+  "main": "bootstrap.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CraigZeng/speed.git"
+  },
+  "keywords": [
+    "js",
+    "mvc",
+    "dev"
+  ],
+  "author": "zengcheng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CraigZeng/speed/issues"
+  },
+  "homepage": "https://github.com/CraigZeng/speed",
+  "dependencies": {
+    "async": "^1.0.0"
+  }
+}
