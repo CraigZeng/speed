@@ -3,6 +3,7 @@
  * @author zengcheng
  */
 var config = require('../config/index.js');
+var Controller = require('./controller.js');
 var url = require('url');
 var path = require('path');
 var fs = require('fs');
@@ -43,7 +44,7 @@ function getController(req, pathname, projectInfo) {
     if (!controllerFunc[2]) {
         controllerFunc[2] = 'index';
     }
-    controllerPath = path.join(projectInfo.rootPath, controllerFunc[1]) + '.js';
+    controllerPath = path.join(projectInfo.rootPath, '/controller/', controllerFunc[1]) + '.js';
     if (fs.existsSync(controllerPath)) {
         controller = require(controllerPath);
         if (controller[controllerFunc[2]]) {
@@ -74,7 +75,7 @@ exports.dispatch = function (req, res) {
     var controllerMethod = getController(req, reqInfo.path, projectInfo);
 
     if (controllerMethod) {
-        controllerMethod.controller[controllerMethod.method](req, res);
+        controllerMethod.controller[controllerMethod.method].call(new Controller(req, res), req, res);
     } else {
         res.writeHead(404, {'Content-Type': 'text/plain'});
         res.end('notfound');
