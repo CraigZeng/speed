@@ -1,5 +1,11 @@
+/**
+ * @file  基础controller类, 提供了基本的controller方法
+ * @author zengcheng
+ */
 var events = require('events');
 var util = require("util");
+
+var async = require('async');
 
 function Controller() {
     this.events = {

@@ -1,3 +1,7 @@
+/**
+ * @file 项目的配置信息
+ * @author zengcheng
+ */
 var path = require('path');
 var fs = require('fs');
 var config = require('./config.js');

@@ -1,8 +1,6 @@
 /**
- *
  *  @file speed的启动入口
  *  @author zengcheng
- *
  */
 
 var cluster = require('cluster');
