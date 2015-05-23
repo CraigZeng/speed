@@ -2,8 +2,51 @@
  * @file 代理http请求
  * @author zengcheng
  */
+var http = require('http');
+var url = require('url');
 var async = require('async');
 var config = require('../config/index.js');
+
+
+/**
+ * 代理请求
+ * @param  {string}   apiUrl      请求的url
+ * @param  {string}   method    GET|POST
+ * @param  {object}   req      http的请求对象
+ * @param  {Function} callback 代理完成后回调函数
+ */
+function request(apiUrl, method, req, callback) {
+    var urlParams = url.parse(apiUrl);
+    var options = {
+        hostname: urlParams.hostname,
+        port: urlParams.port,
+        path: urlParams.path,
+        method: method,
+        headers: req.headers
+    };
+    var proxyReq = http.request(options, function (response) {
+        var body = '';
+        response.setEncoding('utf8');
+        response.on('data', function (chunk) {
+            body += chunk;
+        });
+        response.on('end', function () {
+            callback(body);
+        });
+    });
+
+    proxyReq.on('error', function(e) {
+      console.log('problem with request: ' + e.message);
+    });
+
+    req.on('data', function (data) {
+        req.write(data);
+    });
+
+    req.on('end', function () {
+        proxyReq.end();
+    });
+}
 
 /**
  * 请求后端服务器数据接口
@@ -20,7 +63,7 @@ function proxy(api, req, callback) {
         url = api.url;
         method = api.method || req.method;
     }
-    callback({a:1})
+    request(config.getRealUrl(url), method.toUpperCase(), req, callback);
 }
 
 /**

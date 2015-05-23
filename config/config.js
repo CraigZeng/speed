@@ -15,8 +15,8 @@ var config = {
             }
         },
         "api": {
-            "fedev" : "www.baidu.com",
-            "mainsite" : "192.168.1.102:8080",
+            "fedev" : "192.168.18.44:8080",
+            "mainsite" : "192.168.18.44:8080",
         },
         "webserver": {
             "port": 8888 //webserver监听的端口

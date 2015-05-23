@@ -46,7 +46,10 @@ exports.getProjectInfo = function (host) {
 exports.getRealUrl = function (url) {
     var tokenIndex = url.indexOf(API_EVN_TOKEN);
     if (tokenIndex > 0) {
-        url = config.api[url.substring(0, tokenIndex)] + url.substring(tokenIndex + 1);
+        url = config.api[url.substring(0, tokenIndex)] + url.substring(tokenIndex + 2);
+    }
+    if (url.indexOf('http:') === -1) {
+        url = 'http://' + url;
     }
     return url;
 }
