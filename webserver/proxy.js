@@ -18,20 +18,23 @@ var config = require('../config/index.js');
 function request(apiUrl, method, req, callback) {
     var urlParams = url.parse(apiUrl);
     var options = {
+        host: urlParams.host,
         hostname: urlParams.hostname,
         port: urlParams.port,
         path: urlParams.path,
         method: method,
-        headers: req.headers
+        headers: {
+            "Content-Type": "application/json;charset=utf-8"
+        }
     };
     var proxyReq = http.request(options, function (response) {
-        var body = '';
+        var buffers = '';
         response.setEncoding('utf8');
         response.on('data', function (chunk) {
-            body += chunk;
+            buffers += chunk.toString();
         });
         response.on('end', function () {
-            callback(body);
+            callback(JSON.parse(buffers));
         });
     });
 
@@ -89,11 +92,13 @@ exports.parallel = function (apis, req, callback) {
     var apisHolder = {};
     if (apis) {
         for (var key in apis) {
-            apisHolder[key] = function (cb) {
-                proxy(apis[key], req, function (data) {
-                    cb(null, data);
-                });
-            }
+            apisHolder[key] = (function(key) {
+                return function (cb) {
+                        proxy(apis[key], req, function (data) {
+                            cb(null, data);
+                        });
+                    };
+            })(key);
         }
         async.parallel(apisHolder, function (err, data) {
             callback && callback(err, data);

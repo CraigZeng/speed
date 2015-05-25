@@ -10,5 +10,7 @@ var router = require('./router.js');
  * @param  {object} res http返回对象
  */
 exports.router = function (req, res) {
-    router.dispatch(req, res);
+    if(req.url.indexOf('/favicon.ico') !== 0) {
+        router.dispatch(req, res);
+    }
 };

@@ -49,7 +49,7 @@ function proxy(apis) {
  * @param  {object} data 模板对应的数据
  */
 function render(tpl, data) {
-    this.res.writeHead(200, {'Content-Type': 'text/plain'});
+    this.res.writeHead(200, {'Content-Type': 'application/json;charset=utf8'});
     this.res.end(JSON.stringify(data));
 }
 
