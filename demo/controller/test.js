@@ -6,7 +6,7 @@ exports.index = function (req, res) {
     });
     //this.bindDefault('');
     this.listenOver(function (data) {
-        me.render('sdsdsd/sdsd/sdsd.html', data);
+        me.render('/view/index.html', data);
     });
 };
 
