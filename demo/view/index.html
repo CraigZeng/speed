@@ -10,5 +10,12 @@
     <body>
         <div class="detail">
         </div>
+        <script type="text/javascript" src="../static/js/esl.js"></script>
+        <script type="text/javascript">
+        require.config({baseUrl: '/static/js'});
+        require(['home/index'], function(a) {
+            a.init()}
+        )
+        </script>
     </body>
 </html>
