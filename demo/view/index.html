@@ -10,12 +10,21 @@
     <body>
         <div class="detail">
         </div>
-        <script type="text/javascript" src="../static/js/esl.js"></script>
+        <script type="text/javascript" src="/static/js/esl.js"></script>
         <script type="text/javascript">
-        require.config({baseUrl: '/static/js'});
-        require(['home/index'], function(a) {
-            a.init()}
-        )
+            require.config({baseUrl: '/static/js'});
         </script>
+        <!-- build:js /static/js/rave/main.js -->
+        <script type="text/javascript" src="/static/js/home/index.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:remove -->
+        <script type="text/javascript">
+
+            require(['home/index'], function (mod) {
+                mod.init();
+            });
+        </script>
+        <!-- endbuild -->
     </body>
 </html>
