@@ -1,0 +1,1 @@
+define("common",["require","exports","module"],function(o,n){console.log("kkksss"),n.init=function(){console.log("test")}}),define("home/index",["require","exports","module","common"],function(o,n){var e=o("../common");n.init=function(){e.init(),console.log("ss")}}),require(["home/index"],function(o){o.init()});

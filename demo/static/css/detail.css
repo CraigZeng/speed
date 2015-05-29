@@ -1,4 +1,5 @@
 .detail{
     height: 100px;
     background: green;
+    background: url('../img/a.jpg');
 }
