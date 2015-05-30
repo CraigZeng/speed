@@ -106,7 +106,55 @@ exports.parallel = function (apis, req, callback) {
     }
 };
 
-exports.download = function (url, req, res) {
+/**
+ * 下载文件
+ * @param  {string} apiUrl 请求的url
+ * @param  {obejct} req http请求对象
+ * @param  {object} res http应答对象
+ * @param  {string=} filename 文件名称
+ */
+exports.download = function (apiUrl, req, res, filename) {
+    apiUrl = config.getRealUrl(apiUrl);
+    filename = filename || new Date().getTime();
+    var userAgent = (req.headers['user-agent']||'').toLowerCase();
+    var urlParams = url.parse(apiUrl);
+    var options = {
+        host: urlParams.host,
+        hostname: urlParams.hostname,
+        port: urlParams.port,
+        path: urlParams.path,
+        method: 'GET'
+    };
+
+    var proxyReq = http.request(options, function (response) {
+        if(userAgent.indexOf('msie') >= 0 || userAgent.indexOf('chrome') >= 0) {
+            res.setHeader('Content-Disposition', 'attachment; filename=' + encodeURIComponent(filename));
+        } else if(userAgent.indexOf('firefox') >= 0) {
+            res.setHeader('Content-Disposition', 'attachment; filename*="utf8\'\'' + encodeURIComponent(filename)+'"');
+        } else {
+            /*safari等其他非主流浏览器只能自求多福了 */
+            res.setHeader('Content-Disposition', 'attachment; filename=' + new Buffer(filename).toString('binary'));
+        }
+        response.pipe(res);
+    });
+
+    proxyReq.on('error', function(e) {
+      console.log('problem with request: ' + e.message);
+    });
+
+    req.on('data', function (data) {
+        req.write(data);
+    });
+
+    req.on('end', function () {
+        proxyReq.end();
+    });
+};
+
+/**
+ * 上传文件
+ */
+exports.upload = function () {
 
 };
 

@@ -10,5 +10,9 @@ exports.index = function (req, res) {
     });
 };
 
+exports.testdownload = function (req, res){
+    this.download('http://speed.myzone.cn/WindowsXP_SP2.exe', '你好.exe');
+};
+
 
 

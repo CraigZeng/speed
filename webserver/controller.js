@@ -44,6 +44,14 @@ function proxy(apis) {
 }
 
 /**
+ * 下载文件
+ * @param  {string} url 文件地址
+ */
+function download(url, filename) {
+    proxyUtil.download(url, this.req, this.res, filename);
+}
+
+/**
  * 调用模板引擎渲染模板
  * @param  {string} tpl  模板路径
  * @param  {object} data 模板对应的数据
@@ -75,6 +83,7 @@ util.inherits(Controller, events.EventEmitter);
 
 Controller.prototype.constructor = Controller;
 Controller.prototype.proxy =  proxy;
+Controller.prototype.download = download;
 Controller.prototype.render = render;
 Controller.prototype.listenOver = listenOver;
 Controller.prototype.bindDefault = bindDefault;
