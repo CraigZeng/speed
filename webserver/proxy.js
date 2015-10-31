@@ -43,7 +43,7 @@ function request(apiUrl, method, req, callback) {
     });
 
     req.on('data', function (data) {
-        req.write(data);
+        proxyReq.write(data);
     });
 
     req.on('end', function () {
@@ -143,7 +143,7 @@ exports.download = function (apiUrl, req, res, filename) {
     });
 
     req.on('data', function (data) {
-        req.write(data);
+        proxyReq.write(data);
     });
 
     req.on('end', function () {
